@@ -12,14 +12,14 @@ export default function DarkMode(){
     },[])
     return (
         <span onClick={()=>{ 
-            let 쿠키값 = ('; '+document.cookie).split(`; mode=`).pop().split(';')[0];
-            if (쿠키값 == 'light') {
+            let cookies = ('; '+document.cookie).split(`; mode=`).pop().split(';')[0];
+            if (cookies == 'light') {
               document.cookie = 'mode=dark; max-age=' + (3600 * 24 * 400)
               router.refresh()
             } else {
               document.cookie = 'mode=light; max-age=' + (3600 * 24 * 400)
               router.refresh()
             }
-           }}>{document?.cookie == 'mode=light' ? '🌙' : '☀️'}</span>
+           }}>{document.cookie == 'mode=light' ? '🌙' : '☀️'}</span>
     )
   } 
