@@ -6,17 +6,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { LogOutBtn } from "./LogOutBtn";
 import { Suspense } from "react";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import { cookies } from "next/headers";
+import DarkMode from "./DarkMode";
 
 export const metadata = {
   title: "Create Next App",
@@ -25,10 +16,14 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   let session = await getServerSession(authOptions)
- 
+  let cookie = cookies().get('mode')
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+       <body className={
+        cookie != undefined && cookie.value == 'dark' 
+          ? 'dark-mode'
+          : ''
+      }>
       <div className="navbar">
         <Link href="/" className="logo">Appleforum</Link>
         <Link href="/list">List</Link>
@@ -39,6 +34,7 @@ export default async function RootLayout({ children }) {
               ? <span>{session.user.name} {session.user.email}<LogOutBtn /> </span>
               : <LoginBtn />
           }
+          <DarkMode />
       </div>
         {children}
       </body>
