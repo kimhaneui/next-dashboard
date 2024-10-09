@@ -56,6 +56,10 @@ a {
 .img{
   width: 100px;
 }
+.dark-mode {
+  background: #222;
+  color: white;
+}
 .dark-mode .navbar {
   background: #222;
 }
