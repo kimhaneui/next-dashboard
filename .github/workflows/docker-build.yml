@@ -1,0 +1,42 @@
+name: Docker Image Build and Push
+
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 푸시될 때 자동 실행
+  pull_request:
+    branches:
+      - main  # main 브랜치로 pull request가 열릴 때 자동 실행
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3  # GitHub 리포지토리에서 코드 체크아웃
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Cache Docker layers
+      uses: actions/cache@v2
+      with:
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-buildx-
+
+    - name: Build Docker image
+      run: |
+        docker build -t your-dockerhub-username/your-image-name:latest .
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ Ov23liJAW9SRJwMOIGku }}
+        password: ${{ 1139b2a4b5da69f63c3f1d26c0f146e1cedf0d0c }}
+
+    - name: Push Docker image to Docker Hub
+      run: |
+        docker push your-dockerhub-username/your-image-name:latest
