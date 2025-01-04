@@ -2,6 +2,6 @@
 export default async function Home() {
  
   return (
-    <div>hi</div>
+    <div>hi welcome to my world</div>
   );
 }
