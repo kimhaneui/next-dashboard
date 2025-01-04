@@ -5,6 +5,7 @@ import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(rq, rs) {
   if (rq.method == 'POST'){
+    
     let session = await getServerSession(rq, rs, authOptions);
     
     let data = {title : rq.body.title, content : rq.body.content}
